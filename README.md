@@ -1,43 +1,9 @@
-# Simple go Milvus DB client
+# Simple golang Milvus DB client library
 
-## Usage example
-```go
-package main
+Client library is a simple wrapper around [Milvus](https://milvus.io/) service [gRPC](https://grpc.io/docs/languages/go/quickstart/) client generated from [proto](https://github.com/milvus-io/milvus-proto) and implements [MilvusServiceClient](https://github.com/milvus-io/milvus-proto/blob/489c7aeaa9ede41ba7505ce675720b3a7fa0448e/go-api/milvuspb/milvus.pb.go#L9962).
 
-import (
-	"context"
-	"fmt"
-	"time"
+## Usage
 
-	"github.com/alex-dna-tech/milvus-client"
-	"github.com/milvus-io/milvus-proto/go-api/v2/milvuspb"
-)
+`go get -u github.com/alex-dna-tech/milvus-client`
 
-const (
-    serverURL = "localhost:19530"
-    collection = "test"
-)
-
-func main() {
-	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
-	defer cancel()
-
-	// Create milvus client instance
-	client, err := client.New(ctx, serverURL)
-	if err != nil {
-		fmt.Printf("failed to connect to Milvus: ", err.Error())
-	}
-	defer client.Close()
-
-    // ShowCollections call procedure with ShowCollectionsRequest
-    col, err := client.ShowCollections(ctx, &milvuspb.ShowCollectionsRequest{})
-    if err != nil {
-        fmt.Printf("ShowCollections err: %v\n", err)
-    }
-
-    // Printing ShowCollectionsResponse
-    fmt.Printf("Milvus Collection: %v\n", col)
-
-}
-```
+[Simple execution example](https://github.com/alex-dna-tech/milvus-client/tree/master/example)
